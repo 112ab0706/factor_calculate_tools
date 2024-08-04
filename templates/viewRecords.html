@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!--indicating to the browser to render the document following the HTML5 specification-->
+
+<html lang="en">
+<!-- specifies that the primary language of the document is English-->
+
+<head>
+    <meta charset="UTF-8">
+    <!--specifies the character encoding as UTF-8-->
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <!--instructs Internet Explorer browsers to use the latest rendering engine available for rendering the page-->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--controls the viewport size and scaling behavior of the page on mobile devices-->
+
+    <title>View Records</title>
+</head>
+<body>
+{% if language == 'en' %}
+    <h1>View Records</h1>
+{% elif language == 'zh' %}
+    <h1>查看紀錄</h1>
+{% endif %}
+<div class="button-container">
+    {% if language == 'en' %}
+        <form action="/">
+            <button style="color: blue; margin: 5px;">Return</button>
+        </form>
+    {% elif language == 'zh' %}
+        <form action="/">
+            <button style="color: blue; margin: 5px;">返回</button>
+        </form>
+    {% endif %}
+    <!--press to enter the home page-->
+
+    {% if language == 'en' %}
+        <form action="/button_clean" method="post">
+            <button type="submit" name="language" value="en" style="color: cadetblue; margin: 5px;">Clean</button>
+        </form>
+    {% elif language == 'zh' %}
+        <form action="/button_clean" method="post">
+            <button type="submit" name="language" value="zh" style="color: cadetblue; margin: 5px;">清空紀錄</button>
+        </form>
+    {% endif %}
+    <!--press the button to clean the record-->
+
+</div>
+{% if language == 'en' %}
+    <p>FVF: Future Value Factor | PVF: Present Value Factor</p>
+    <p>FVF-OA: Future Value Factor of Ordinary Annuity | PVF-OA: Present Value Factor of Ordinary Annuity</p>
+    <p>FVF-AD: Future Value Factor of Annuity Due | PVF-AD: Present Value Factor of Annuity Due</p>
+{% elif language == 'zh' %}
+    <p>FVF: 複利終值因子 | PVF: 複利現值因子</p>
+    <p>FVF-OA: 普通年金終值因子 | PVF-OA: 普通年金現值因子</p>
+    <p>FVF-AD: 期初年金終值因子 | PVF-AD: 期初年金現值因子</p>
+{% endif %}
+<div>
+    {% if language == 'en' %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Mode</th>
+                <th>n(Number of period)</th>
+                <th>i(Interest rate)</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                {% for item in row %}
+                <td>{{ item }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% elif language == 'zh' %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>模式</th>
+                <th>n(期間)</th>
+                <th>i(利率)</th>
+                <th>結果</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                {% for item in row %}
+                <td>{{ item }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+</body>
+</html>

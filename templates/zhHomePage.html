@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--indicating to the browser to render the document following the HTML5 specification-->
+
+<html lang="en">
+<!-- specifies that the primary language of the document is English-->
+
+<head>
+    <meta charset="UTF-8">
+    <!--specifies the character encoding as UTF-8-->
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <!--instructs Internet Explorer browsers to use the latest rendering engine available for rendering the page-->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--controls the viewport size and scaling behavior of the page on mobile devices-->
+
+    <title>首頁</title>
+    <h1 align="center">首頁</h1>
+    <!--text center align-->
+
+    <style>
+        .centered-buttons {
+            text-align: center;
+        }
+    </style>
+    <!--button center align-->
+
+</head>
+<body>
+    <div class="centered-buttons">
+        <br>
+        <form action="/calculator" method="post">
+            <button type="submit" name="language" value="{{ language }}" style="color: cadetblue;">計算工具</button>
+        </form>
+        <!--press the button to enter the calculate page-->
+
+        <br>
+        <br>
+        <form action="/records" method="get">
+            <button type="submit" name="language" value="{{ language }}" style="color: cadetblue;">查看紀錄</button>
+        </form>
+        <!--press the button to enter the view recodes page-->
+
+        <br><br><br><br><br><br><br><br><br><br>
+        <hr>
+        <form action="/change_language" method="post">
+            <button type="submit" name="language" value="en">English/中文</button>
+            <!--press the button to change language (English and Chinese)-->
+        </form>
+    </div>
+</body>
+</html>

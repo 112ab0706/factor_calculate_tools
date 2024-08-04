@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!--indicating to the browser to render the document following the HTML5 specification-->
+
+<html lang="en">
+<!-- specifies that the primary language of the document is English-->
+
+<head>
+    <meta charset="UTF-8">
+    <!--specifies the character encoding as UTF-8-->
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <!--instructs Internet Explorer browsers to use the latest rendering engine available for rendering the page-->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--controls the viewport size and scaling behavior of the page on mobile devices-->
+
+    <title>Calculate Tools</title>
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: left;
+        }
+        .custom-button {
+            color: cadetblue;
+            margin: 5px;
+        }
+    </style>
+    <!--align the buttons horizontally to the left-->
+
+</head>
+<body>
+    <h1 align="center">{{ calculationMode }}</h1>
+    <!--text center align-->
+    
+    <div class="button-container">
+        {% if language == 'en' %}
+            <form action="/">
+                <button style="color: blue; margin: 5px;">Return</button>
+            </form>
+        {% elif language == 'zh' %}
+            <form action="/">
+                <button style="color: blue; margin: 5px;">返回</button>
+            </form>
+        {% endif %}
+        <!--press to enter the home page-->
+
+        {% if language == 'en' %}
+            <form action="/button_FVF" method="post">
+                <button type="submit" name="language" value="{{ language }}" class="custom-button">1. FVF</button>
+            </form>
+        {% elif language == 'zh' %}
+            <form action="/button_FVF" method="post">
+                <button type="submit" name="language" value="{{ language }}" class="custom-button">1. 複利終值因子</button>
+            </form>
+        {% endif %}
+        <!--calculator change to FVF mode-->
+        
+        {% if language == 'en' %}
+            <form action="/button_PVF" method="post">
+                <button type="submit" name="language" value="{{ language }}" class="custom-button">2. PVF</button>
+            </form>
+        {% elif language == 'zh' %}
+            <form action="/button_PVF" method="post">
+                <button type="submit" name="language" value="{{ language }}" class="custom-button">2. 複利現值因子</button>
+            </form>
+        {% endif %}
+        <!--calculator change to PVF mode-->
+        
+        {% if language == 'en' %}
+            <form action="/button_FVF_OA" method="post">
+                <button type="submit" name="language" value="{{ language }}" class="custom-button">3. FVF-OA</button>
+            </form>
+        {% elif language == 'zh' %}
+            <form action="/button_FVF_OA" method="post">
+                <button type="submit" name="language" value="{{ language }}" class="custom-button">3. 普通年金終值因子</button>
+            </form>
+        {% endif %}
+        <!--calculator change to FVF-OA mode-->
+        
+        {% if language == 'en' %}
+            <form action="/button_PVF_OA" method="post">
+                <button type="submit" name="language" value="{{ language }}" class="custom-button">4. PVF-OA</button>
+            </form>
+        {% elif language == 'zh' %}
+            <form action="/button_PVF_OA" method="post">
+                <button type="submit" name="language" value="{{ language }}" class="custom-button">4. 普通年金現值因子</button>
+            </form>
+        {% endif %}
+        <!--calculator change to PVF-OA mode-->
+        
+        {% if language == 'en' %}
+            <form action="/button_FVF_AD" method="post">
+                <button type="submit" name="language" value="{{ language }}" class="custom-button">5. FVF-AD</button>
+            </form>
+        {% elif language == 'zh' %}
+            <form action="/button_FVF_AD" method="post">
+                <button type="submit" name="language" value="{{ language }}" class="custom-button">5. 期初年金終值因子</button>
+            </form>
+        {% endif %}
+        <!--calculator change to FVF-AD mode-->
+        
+        {% if language == 'en' %}
+            <form action="/button_PVF_AD" method="post">
+                <button type="submit" name="language" value="{{ language }}" class="custom-button">6. PVF-AD</button>
+            </form>
+        {% elif language == 'zh' %}
+            <form action="/button_PVF_AD" method="post">
+                <button type="submit" name="language" value="{{ language }}" class="custom-button">6. 期初年金現值因子</button>
+            </form>
+        {% endif %}
+        <!--calculator change to PVF-AD mode-->
+    </div>
+    <br>
+    <div align='center'>
+        <form id="calculationForm" action="/button_calculate" method="post">
+            {% if language == 'en' %}
+            <label for="input_n">n (Number of period): </label>
+            <input type="text" id="input_n" name="user_input_n" value=""><br><br>
+            <label for="input_i">i (Interest rate): </label>
+            <input type="text" id="input_i" name="user_input_i" value="">%
+            <button type="submit">Calculate</button>
+            {% elif language == 'zh' %}
+            <label for="input_n">n (期間): </label>
+            <input type="text" id="input_n" name="user_input_n" value=""><br><br>
+            <label for="input_i">i (利率): </label>
+            <input type="text" id="input_i" name="user_input_i" value="">%
+            <button type="submit">計算</button>
+            {% endif %}
+        </form>
+    </div>
+    <div id="resultDiv">
+        <h2 align="center">Calculate Result: <br>{{ calculateResult }}</h2>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        //make sure everything is loaded before running the javascript code
+
+            document.getElementById('calculationForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                //prevent page refresh
+
+                const formData = new FormData(this);
+                //get data from the form
+
+                fetch(this.action, {
+                        method: this.method,
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('resultDiv').innerHTML = `<h2 align="center">${data}</h2>`;
+                    })
+                    .catch(error => console.error('Error:', error));
+                    //catch possible errors
+
+            });
+        });
+    </script>
+</body>
+</html>
